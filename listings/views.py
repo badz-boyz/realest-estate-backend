@@ -3,8 +3,11 @@ import os
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
+from django.db import IntegrityError
+from .models import CustomUser, Listing
 from dotenv import load_dotenv
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+
 
 def parse_listings(listings):
     parsed_listings = {}
@@ -35,25 +38,14 @@ def get_listings(request, city=None):
     listings = parse_listings(data["records"])
     return JsonResponse(listings) 
 
-@require_POST
-@login_required
-def save_listing(request, listing_id):
-    saved_listing, created = SavedListing.objects.get_or_create(user=request.user, listing_id=listing_id)
+def create_user(request, email):
+        new_user = CustomUser(email=email)
+        new_user.save()
 
-    if created:
-        return JsonResponse({'status': 'success', 'message': 'Listing saved successfully.'})
-    else:
-        return JsonResponse({'status': 'info', 'message': 'Listing was already saved.'})
-    
-@login_required
-def get_saved_listings(request):
-    saved_listings = SavedListing.objects.filter(user=request.user)
-    # saved_ids = [listing.listing_id for listing in saved_listings]
-    all_saved_listings = []
-    for saved_listing in saved_listings:
-        all_saved_listings.append(saved_listing)
-
-    return JsonResponse(all_saved_listings)
-
+def save_listing(request, email, address, description):
+     new_listing = Listing(address=address, description=description)
+     user = CustomUser.objects.get(email=email)
+     user.saved_listings.add(new_listing)
+     
 class home_test(TemplateView):
     template_name = 'home.html'
