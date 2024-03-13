@@ -1,3 +1,14 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/listings" }]
-}
+    "builds": [
+      {
+        "src": "realest_project/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "realest_project/wsgi.py"
+      }
+    ]
+  }
