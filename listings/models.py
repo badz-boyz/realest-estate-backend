@@ -1,10 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
-class SavedListing(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing_id = models.CharField(max_length=255)
-    saved_on = models.DateTimeField(auto_now_add=True)
+class Listing(models.Model):
+    address = models.TextField()
+    description = models.TextField
 
     def __str__(self):
-        return f"{self.user.username} - {self.listing_id}"
+        return self.address
+
+class CustomUser(models.Model):
+    email = models.EmailField(_('email address'), unique=True)
+    saved_listings = models.ManyToManyField(Listing, blank=True)
+
+    def __str__(self):
+        return self.email
