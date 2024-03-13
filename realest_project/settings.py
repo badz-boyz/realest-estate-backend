@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-z#di!@ynp!k(#e6pf(ws9^8a_en0%j^z16jqicu^h5fh64q-d4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','.vercel.app', 'realest-estate-inky.vercel.app', 'https://realest-estate-inky.vercel.app']
+ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','.vercel.app', 'realest-estate-inky.vercel.app', 'https://realest-estate-inky.vercel.app', 'realest-estate-frontend.vercel.app', 'https://realest-estate-frontend.vercel.app']
 
 
 
