@@ -3,7 +3,6 @@ import os
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
-from .models import SavedListing
 from dotenv import load_dotenv
 from django.http import JsonResponse
 
