@@ -1,9 +1,12 @@
 import requests
 from django.contrib.auth.models import User
 import os
+from django.contrib.auth import authenticate, login
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from django.core import serializers
 from django.views.generic import TemplateView
 from dotenv import load_dotenv
 from django.http import JsonResponse, HttpResponse
@@ -56,6 +59,30 @@ def create_user(request):
         return JsonResponse({'message': 'User created successfully'}, status=201)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+    
+@csrf_exempt
+@require_http_methods(["POST"])
+def user_login(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
+    
+    user = authenticate(username=email, password=password)
+    if user is not None:
+        login(request, user)
+        # Consider returning additional user info or a session token here
+        return JsonResponse({'message': 'Login successful'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid credentials'}, status=400)
+
+@require_http_methods(["GET"])
+def get_users(request):
+    # Query the User model
+    users = User.objects.all()
+    # Serialize user data
+    users_data = serializers.serialize('json', users, fields=('username',))
+    # Return JSON response
+    return JsonResponse(users_data, safe=False, status=200)
 
 
 @csrf_exempt
