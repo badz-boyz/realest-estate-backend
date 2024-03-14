@@ -165,3 +165,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+USE_X_FORWARDED_HOST = True
