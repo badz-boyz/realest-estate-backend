@@ -17,19 +17,19 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env()
 
-env = environ.Env(
-    DEBUG=(bool, False),
-    ENVIRONMENT=(str, "PRODUCTION"),
-    ALLOW_ALL_ORIGINS=(bool, False),
-    ALLOWED_HOSTS=(list, []),
-    ALLOWED_ORIGINS=(list, []),
-    DATABASE_ENGINE=(str, "django.db.backends.postgresql"),
-    DATABASE_NAME=(str, "your_database_name"), 
-    DATABASE_USER=(str, "your_database_user"),  
-    DATABASE_PASSWORD=(str, "your_database_password"),  
-    DATABASE_HOST=(str, "your_database_host"),  
-    DATABASE_PORT=(int, 5432),  
-)
+# env = environ.Env(
+#     DEBUG=(bool, False),
+#     ENVIRONMENT=(str, "PRODUCTION"),
+#     ALLOW_ALL_ORIGINS=(bool, False),
+#     ALLOWED_HOSTS=(list, []),
+#     ALLOWED_ORIGINS=(list, []),
+#     DATABASE_ENGINE=(str, "django.db.backends.postgresql"),
+#     DATABASE_NAME=(str, "your_database_name"), 
+#     DATABASE_USER=(str, "your_database_user"),  
+#     DATABASE_PASSWORD=(str, "your_database_password"),  
+#     DATABASE_HOST=(str, "your_database_host"),  
+#     DATABASE_PORT=(int, 5432),  
+# )
 
 
 
@@ -104,17 +104,23 @@ WSGI_APPLICATION = 'realest_project.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": env.str("DATABASE_ENGINE"),
+#         "NAME": env.str("DATABASE_NAME"),
+#         "USER": env.str("DATABASE_USER"),
+#         "PASSWORD": env.str("DATABASE_PASSWORD"),
+#         "HOST": env.str("DATABASE_HOST"),
+#         "PORT": env.int("DATABASE_PORT"),
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": env.str("DATABASE_ENGINE"),
-        "NAME": env.str("DATABASE_NAME"),
-        "USER": env.str("DATABASE_USER"),
-        "PASSWORD": env.str("DATABASE_PASSWORD"),
-        "HOST": env.str("DATABASE_HOST"),
-        "PORT": env.int("DATABASE_PORT"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
