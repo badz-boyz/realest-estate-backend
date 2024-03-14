@@ -38,8 +38,9 @@ def get_listings(request, city=None):
     return JsonResponse(listings) 
 
 def create_user(request, email):
-        new_user = CustomUser(email=email)
-        new_user.save()
+        # new_user = CustomUser(email=email)
+        # new_user.save()
+        return HttpResponse(f'User {email} created')
 
 def save_listing(request, email, address, description):
      new_listing = Listing(address=address, description=description)
