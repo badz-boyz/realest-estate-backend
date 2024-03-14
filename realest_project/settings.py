@@ -45,6 +45,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','0.0.0.0','.vercel.app', 'realest-estate-inky.vercel.app', 'https://realest-estate-inky.vercel.app', 'realest-estate-frontend.vercel.app', 'https://realest-estate-frontend.vercel.app', 'realest-estate-backend.vercel.app', 'localhost']
 
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = [
@@ -175,6 +176,29 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

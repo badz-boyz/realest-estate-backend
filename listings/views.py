@@ -104,6 +104,7 @@ def save_listing(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
+
      
 class home_test(TemplateView):
     template_name = 'home.html'
