@@ -15,6 +15,7 @@ import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env()
 
 env = environ.Env(
     DEBUG=(bool, False),
@@ -22,15 +23,15 @@ env = environ.Env(
     ALLOW_ALL_ORIGINS=(bool, False),
     ALLOWED_HOSTS=(list, []),
     ALLOWED_ORIGINS=(list, []),
-    DATABASE_ENGINE=(str, "django.db.backends.sqlite3"),
-    DATABASE_NAME=(str, BASE_DIR / "db.sqlite3"),
-    DATABASE_USER=(str, ""),
-    DATABASE_PASSWORD=(str, ""),
-    DATABASE_HOST=(str, ""),
-    DATABASE_PORT=(int, 5432),
+    DATABASE_ENGINE=(str, "django.db.backends.postgresql"),
+    DATABASE_NAME=(str, "your_database_name"), 
+    DATABASE_USER=(str, "your_database_user"),  
+    DATABASE_PASSWORD=(str, "your_database_password"),  
+    DATABASE_HOST=(str, "your_database_host"),  
+    DATABASE_PORT=(int, 5432),  
 )
 
-environ.Env.read_env()
+
 
 
 # Quick-start development settings - unsuitable for production
