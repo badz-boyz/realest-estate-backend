@@ -1,7 +1,7 @@
 import requests
 from django.contrib.auth.models import User
 import os
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -10,6 +10,7 @@ from django.core import serializers
 from django.views.generic import TemplateView
 from dotenv import load_dotenv
 from django.http import JsonResponse, HttpResponse
+from .models import Listing
 import json
 
 def parse_listings(listings):
@@ -33,7 +34,7 @@ def get_listings(request, city=None):
     request_data = {
         'query': query,
         'format': 'JSON',
-        'num_records': 3,
+        'num_records': 20,
         'download': False
     }
     response = requests.post(url, json=request_data, headers=request_headers)
@@ -85,22 +86,29 @@ def get_users(request):
     return JsonResponse(users_data, safe=False, status=200)
 
 
+
+# def save_listing(request):
+#     saved_listing = Listing.objects.create(user=request.body.user, address=request.body.address, description=request.body.description )
+#     saved_listing.save()
+#     return JsonResponse("Listing Saved")
 @csrf_exempt
 @require_POST
 def save_listing(request):
+    User = get_user_model()
+    data = json.loads(request.body)
+    print("request", data)
     try:
         data = json.loads(request.body)
         email = data.get('email')
         address = data.get('address')
         description = data.get('description')
-
-        user = CustomUser.objects.get(email=email)
-        listing, created = Listing.objects.get_or_create(address=address, defaults={'description': description})
-        user.saved_listings.add(listing)
+        user = User.objects.get(email=email)
+        listing, created = Listing.objects.get_or_create(user=user, address=address, defaults={'description': description})
+        listing.save()
         
         return JsonResponse({'message': 'Listing saved successfully'}, status=201)
-    except CustomUser.DoesNotExist:
-        return JsonResponse({'error': 'User not found'}, status=404)
+    # except CustomUser.DoesNotExist:
+        # return JsonResponse({'error': 'User not found'}, status=404)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
