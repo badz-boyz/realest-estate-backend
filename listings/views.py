@@ -34,7 +34,7 @@ def get_listings(request, city=None):
     request_data = {
         'query': query,
         'format': 'JSON',
-        'num_records': 3,
+        'num_records': 10,
         'download': False
     }
     response = requests.post(url, json=request_data, headers=request_headers)
